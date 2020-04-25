@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All</title>
+</head>
+
+<body>
+    <p>Return <a href="index.html">home</a>?</p>
+
+    <ul id="list">
+
+    </ul>
+
+    <script>
+        getData();
+        async function getData() {
+            const response = await fetch('/api');
+            const data = await response.json();
+            console.log(data)
+
+            const list = document.getElementById("list");
+
+            for (item of data) {
+                const listItem = document.createElement("li")
+
+                const dateString = new Date(item.timestamp).toLocaleString();
+                listItem.textContent = `${dateString}: ${item.currentFeeling}`;
+                list.appendChild(listItem);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
