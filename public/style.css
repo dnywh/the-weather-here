@@ -1,0 +1,9 @@
+div:not(div#checkInMap) {
+    background-color: lightsalmon;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+#checkInMap {
+    height: 80vh;
+}
