@@ -1,10 +1,12 @@
 {"latitude":-26.528996837214926,"longitude":153.08457708540274,"timestamp":1587796656444,"_id":"3tC9K6qxo5dvKRFE"}
 {"latitude":-26.52898205238459,"longitude":153.08461454241228,"currentFeeling":"This is cool","timestamp":1587796789715,"_id":"D0nqTSJ8ZwdZGwkJ"}
+{"latitude":-26.52896871232621,"longitude":153.08464262676864,"currentFeeling":"fa","timestamp":1587857066750,"_id":"DaPMdCIonTf40uIV"}
 {"latitude":-26.52898205238459,"longitude":153.08461454241228,"currentFeeling":"What is going on!","timestamp":1587796795524,"_id":"EMuH4DjZT59ovHFz"}
 {"latitude":-26.528958020921667,"longitude":153.08459633707128,"currentFeeling":"pretty good thanks","timestamp":1587796704038,"_id":"EeQ0uzosevKkCjGv"}
 {"name":"Sally","status":"Bad","_id":"EeYzF8ARXupjOR5f"}
 {"latitude":-26.52898205238459,"longitude":153.08461454241228,"currentFeeling":"great","timestamp":1587796759570,"_id":"IK0lMLfjHcgvDL65"}
 {"latitude":-26.52898205238459,"longitude":153.08461454241228,"currentFeeling":"great","timestamp":1587796757154,"_id":"LFenDM3ysMMawzz4"}
+{"latitude":-26.528952264129007,"longitude":153.0846302027908,"currentFeeling":"just made an array","timestamp":1587797759647,"_id":"PTtr9Lw1oZcQrTz8"}
 {"name":"Danny","status":"Cool","_id":"V3NLWKsc3rCHjh8X"}
 {"latitude":-26.528958020921667,"longitude":153.08459633707128,"currentFeeling":"great","timestamp":1587796713724,"_id":"W3SDz5IPQxNydT7E"}
 {"latitude":-26.528996837214926,"longitude":153.08457708540274,"timestamp":1587796660885,"_id":"doBob5NCd3zt0yhl"}
@@ -12,4 +14,6 @@
 {"name":"Danny","status":"Cool","_id":"p8srFGvrPiRC7Dn2"}
 {"latitude":-26.52898205238459,"longitude":153.08461454241228,"currentFeeling":"amazing","timestamp":1587796784426,"_id":"q3lkEURsTA74KIyI"}
 {"latitude":-26.528991242516398,"longitude":153.0845414499245,"timestamp":1587796309481,"_id":"ykijQc0ZyVqo0UKH"}
-{"latitude":-26.528952264129007,"longitude":153.0846302027908,"currentFeeling":"just made an array","timestamp":1587797759647,"_id":"PTtr9Lw1oZcQrTz8"}
+{"latitude":-26.52900246217074,"longitude":153.08454098572915,"currentFeeling":"good morning","timestamp":1587857089112,"_id":"zh3zxH5ls5ezoERs"}
+{"latitude":{},"longitude":{},"currentFeeling":"testing p5","timestamp":1587865798105,"_id":"3v7HHJdDUu7q99LF"}
+{"latitude":{},"longitude":{},"currentFeeling":"testing p5 again","timestamp":1587865806763,"_id":"iCvexYZczTRh7hYU"}

@@ -1,91 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
-    <title>Danny's document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js" integrity="sha256-Pg1di+fBF53Rbh9oZR/FeD1xsFzTLC963lcac1D0ias=" crossorigin="anonymous"></script>
+    <title>Data Selfie App</title>
     <style>
-        #geoMap {
-            height: 50vh;
-        }
+      #geoMap {
+        height: 50vh;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Data Selfie App</h1>
-    <p>Hi Danny</p>
+    <p>Add entry | <a href="all.html">All entries</a></p>
 
     <label for="feeling">How are you feeling right now?</label>
-    <input type="text" name="feeling" id="feeling">
+    <input type="text" name="feeling" id="feeling" />
 
-    <button onclick="locateMe()">Locate me and send info off</button>
-
-    <!-- <p>Want to checkout <a href="beagles.html">beagles</a>?</p> -->
+    <button id="locator">Locate me and send info off</button>
 
     <p>Latitude: <span id="latitude">unknown</span>&deg;</p>
     <p>Longitude: <span id="longitude">unknown</span>&deg;</p>
 
-
-
     <div id="geoMap"></div>
 
     <script>
+      // p5.js
+      function setup() {
+        noCanvas();
+        const video = createCapture(VIDEO);
+        video.size(320, 240);
+
         // Leaflet
-        const mymap = L.map('geoMap').setView([0, 0], 15);
+        const mymap = L.map("geoMap").setView([0, 0], 15);
         const marker = L.marker([0, 0]).addTo(mymap);
         const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-        const attribution =
-            "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>";
+        const attribution = "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>";
         const tiles = L.tileLayer(tileUrl, { attribution });
         tiles.addTo(mymap);
 
+        // Button capturing
+        const button = document.getElementById("locator");
+        button.addEventListener("click", async (event) => {
+          const currentFeeling = feeling.value;
+          const data = { latitude, longitude, currentFeeling };
+
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          };
+
+          const response = await fetch("/api", options);
+
+          const json = await response.json();
+          console.log(json);
+        });
+
         // Geo
-        function locateMe() {
-            if ('geolocation' in navigator) {
-                console.log('geolocation is available');
+        if ("geolocation" in navigator) {
+          console.log("geolocation is available");
 
-                navigator.geolocation.getCurrentPosition(async pos => {
-                    // console.log(pos);
-                    const latitude = pos.coords.latitude;
-                    const longitude = pos.coords.longitude;
-                    document.getElementById('latitude').textContent = latitude;
-                    document.getElementById('longitude').textContent = longitude;
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            // console.log(pos);
+            const latitude = pos.coords.latitude;
+            const longitude = pos.coords.longitude;
+            document.getElementById("latitude").textContent = latitude;
+            document.getElementById("longitude").textContent = longitude;
 
-                    const currentFeeling = feeling.value;
+            // .then(response => {
+            //     console.log(response);
+            // });
 
-                    const data = { latitude, longitude, currentFeeling };
-                    const options = {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    }
-
-                    const response = await fetch('/api', options);
-
-                    const json = await response.json();
-                    console.log(json);
-                    
-                    // .then(response => {
-                    //     console.log(response);
-                    // });
-
-                    mymap.setView([latitude, longitude]);
-                    marker.setLatLng([latitude, longitude]);
-                });
-            } else {
-                console.log('geolocation is not available');
-            }
+            mymap.setView([latitude, longitude]);
+            marker.setLatLng([latitude, longitude]);
+          });
+        } else {
+          console.log("geolocation is not available");
         }
+      }
     </script>
-</body>
-
+  </body>
 </html>
