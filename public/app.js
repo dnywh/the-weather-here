@@ -10,7 +10,7 @@
 let lat, lon, weather, airQuality;
 
 if ("geolocation" in navigator) {
-  console.log("geolocation is available");
+  console.log("geolocation is available!");
 
   navigator.geolocation.getCurrentPosition(async (pos) => {
     try {
@@ -22,21 +22,30 @@ if ("geolocation" in navigator) {
       const apiUrl = `/weather/${lat},${lon}`;
       const response = await fetch(apiUrl);
       const json = await response.json();
+      console.log("JSON response from server:");
       console.log(json);
 
+      // Handle weather
       weather = json.weather;
-      airQuality = json.airQuality.results[0].measurements[0];
-
       document.getElementById("summary").textContent = weather.weather_code.value;
       document.getElementById("temperature").textContent = weather.temp.value;
-
+      
+      // Handle air quality
+      airQuality = json.airQuality.results[0].measurements[0];
       airQuality = airQuality.value;
       document.getElementById("aqValue").textContent = airQuality.value;
       document.getElementById("aqUnit").textContent = airQuality.unit;
     } catch (error) {
-      console.log("something went wrong", error);
+      console.log("Something went wrong when fetching the air quality data:");
+      console.error(error);
+      console.log("Trying an alternate source...");
+      const apiUrl = `/weather/${lat},${lon}`;
+      const response = await fetch(apiUrl);
+      const json = await response.json();
+      document.getElementById("aqValue").textContent = `(backup reading) ${json.weather.pm25.value}`;
+      document.getElementById("aqUnit").textContent = json.weather.pm25.units;
+
       airQuality = { value: -1 };
-      document.getElementById("aqValue").textContent = "(no reading)";
     }
 
     const data = { lat, lon, weather, airQuality };
@@ -54,7 +63,7 @@ if ("geolocation" in navigator) {
     console.log(dbJson);
   });
 } else {
-  console.log("geolocation is not available");
+  console.log("geolocation is *not* available");
 }
 
 // Handle button presses, submit data to database
